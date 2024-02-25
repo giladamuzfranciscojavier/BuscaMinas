@@ -10,13 +10,13 @@ public class Interface {
         //Bucle para gestionar reinicios
         while(true){                 
             juego=nuevoJuego(sc);
-            printDescubiertas(juego.getTablero(), juego.getDescubiertas());     
+            printDescubiertas(juego.getSolución(), juego.getDescubiertas());     
             //Bucle del juego
             while (!juego.isExploded() && !juego.isWin()) {     
                 System.out.println("Casillas restantes: "+juego.getRestantes());
-                System.out.println("\nIntroduce fila (1-"+juego.getTablero().length+")");       
+                System.out.println("\nIntroduce fila (1-"+juego.getSolución().length+")");       
                 int f = tratamientoEntrada(sc);
-                System.out.println("Introduce columna (1-"+juego.getTablero().length+")");  
+                System.out.println("Introduce columna (1-"+juego.getSolución().length+")");  
                 int c = tratamientoEntrada(sc);
     
                 int men = juego.descubre(f-1, c-1);
@@ -24,30 +24,30 @@ public class Interface {
                 switch (men) {
                     case 0:
                         System.out.println();
-                        printDescubiertas(juego.getTablero(), juego.getDescubiertas());
+                        printDescubiertas(juego.getSolución(), juego.getDescubiertas());
                         System.out.println("Zona despejada");
                         break;
     
                     case -1:
                         System.out.println();
-                        printTablero(juego.getTablero());
+                        printTablero(juego.getSolución());
                         System.out.println("EXPLOSIÓN!!!");
                         break;
     
                     case 1:
                         System.out.println();
-                        printTablero(juego.getTablero());
+                        printTablero(juego.getSolución());
                         System.out.println("CAMPO DESPEJADO!!!");
                         break;
                 
                     case 2:
                         System.out.println("Ya hemos despejado esa zona!!\n");
-                        printDescubiertas(juego.getTablero(), juego.getDescubiertas());
+                        printDescubiertas(juego.getSolución(), juego.getDescubiertas());
                         break;
                         
                     default:
                         System.out.println("Error, las coordenadas introducidas no son válidas\n");
-                        printDescubiertas(juego.getTablero(), juego.getDescubiertas());
+                        printDescubiertas(juego.getSolución(), juego.getDescubiertas());
                         break;
                 }            
             }  
@@ -65,7 +65,7 @@ public class Interface {
 
 
     static BuscaMinas nuevoJuego(Scanner sc){
-        System.out.println("Introduce el tamaño del tablero (siempre será cuadrado)");
+        System.out.println("Introduce el tamaño del tablero (máximo 92, siempre será cuadrado)");
         int tam = tratamientoEntrada(sc);
         System.out.println("Introduce el número de minas (en caso de introducir más de la cuenta se minarán todas las casillas menos una)");
         int min = tratamientoEntrada(sc);

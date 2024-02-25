@@ -11,7 +11,7 @@ public class BuscaMinas {
     
     /** Prepara un juego de Buscaminas en base al tamaño y número de minas proporcionados
      * 
-     * @param tamano El lado del tablero (cuadrado)
+     * @param tamano El lado del tablero (cuadrado). El máximo será 92, ya que uno mayor provocará un desbordamiento de pila. 
      * @param minas El número de minas. Si es 1 o menor habrá una mina, mientras que si es superior al número de casillas del tablero 
      * se minarán todas las casillas excepto una (ejemplo: si se indican 99 minas para un tamaño de 5 [25 casillas] habrán 24 minas)
      */
@@ -20,6 +20,10 @@ public class BuscaMinas {
         if(tamano<3)
             tamano=3;
                 
+        //El tamaño está capado a 92, ya que a partir de ahí saltaría un stack overflow con la función recursiva descubreSiVacias
+        if(tamano>92)
+            tamano=92;
+
         //Si hay más minas que casillas todas las casillas estarán minadas excepto una (si alguien quiere jugar a la ruleta rusa versión bestia quien soy yo para juzgar)
         if(minas>tamano*tamano)
             minas = (tamano*tamano)-1;
@@ -32,7 +36,7 @@ public class BuscaMinas {
         start(tamano, minas);
     }
 
-    /** Indica si se ha destapado una mina (y por lo tanto perdido el juego)
+    /** Indica si una de las casillas marcada como destapada contiene una mina (y por lo tanto se ha perdido el juego)
      * 
      * @return Devolverá true si se ha destapado una mina. En caso contrario devolverá false
      */
@@ -40,7 +44,7 @@ public class BuscaMinas {
         return explosion;
     }
 
-    /** Indica si se ha han destapado todas las casillas sin minar (y por lo tanto ganado el juego)
+    /** Indica si se ha han destapado todas las casillas que no contienen minas (y por lo tanto se ha ganado el juego)
      * 
      * @return Devolverá true si se han destapado todas las casillas sin minar. En caso contrario devolverá false
      */
@@ -48,17 +52,17 @@ public class BuscaMinas {
         return win;
     }
 
-    /** Getter del tablero con la solución
+    /** Getter de la solución
      * 
-     * @return Devuelve el tablero con la solución
+     * @return Devuelve un array de 2 dimensiones que representa la solución del juego
      */
-    public int[][] getTablero(){
+    public int[][] getSolución(){
         return tablero.clone();
     }
 
-    /** Getter de las casillas descubiertas
+    /** Getter del estado del tablero
      * 
-     * @return Devuelve el estado de visibilidad de las casillas del tablero
+     * @return Devuelve un array de 2 dimensiones que representa el estado de visibilidad de las casillas del tablero (lo que ve el jugador)
      */
     public int[][] getDescubiertas(){
         return descubiertas.clone();
@@ -66,17 +70,17 @@ public class BuscaMinas {
 
     /** Indica cuantas casillas no minadas quedan por destapar
      * 
-     * @return Devuelve el número de casillas no minadas sin destapar
+     * @return Devuelve un entero que representa el número de casillas no minadas sin destapar
      */
     public int getRestantes(){
         return restantes;
     }
 
 
-    /** Ejecuta un turno del jugador, destapando la casilla proporcionada. Devuelve un mensaje a tratar por la interfaz en forma de número entero
+    /** Ejecuta un turno del jugador, destapando la casilla correspondiente a las coordenadas proporcionadas. Devuelve un mensaje a tratar por la interfaz en forma de número entero
      * 
-     * @param x Coordenada x de la casilla
-     * @param y Coordenada y de la casilla
+     * @param x Fila de la casilla
+     * @param y Columna de la casilla
      * @return -1: Destapada una mina (pierde la partida)<br> 0: Continúa el juego<br>
      *  1: Destapadas todas las casillas no minadas (gana el juego)<br> 2: Casilla ya destapada<br> 99: Coordenadas no válidas
      */
