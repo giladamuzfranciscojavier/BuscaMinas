@@ -11,8 +11,8 @@ public class BuscaMinas {
     
     /** Prepara un juego de Buscaminas en base al tamaño y número de minas proporcionados
      * 
-     * @param tamano El lado del tablero (cuadrado). El máximo será 92, ya que uno mayor provocará un desbordamiento de pila. 
-     * @param minas El número de minas. Si es 1 o menor habrá una mina, mientras que si es superior al número de casillas del tablero 
+     * @param tamano El lado del tablero (cuadrado). El máximo será 92, ya que si es más grande provocará un desbordamiento de pila (en caso de introducir uno mayor se limita automáticamente). 
+     * @param minas El número de minas. Si es 1 o menor habrá una sola mina, mientras que si es superior al número de casillas del tablero 
      * se minarán todas las casillas excepto una (ejemplo: si se indican 99 minas para un tamaño de 5 [25 casillas] habrán 24 minas)
      */
     public BuscaMinas(int tamano, int minas){
@@ -54,7 +54,7 @@ public class BuscaMinas {
 
     /** Getter de la solución
      * 
-     * @return Devuelve un array de 2 dimensiones que representa la solución del juego
+     * @return Devuelve un array de 2 dimensiones que representa la solución del juego (el tablero "real")
      */
     public int[][] getSolución(){
         return tablero.clone();
