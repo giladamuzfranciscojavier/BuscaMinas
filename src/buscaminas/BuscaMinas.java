@@ -57,7 +57,15 @@ public class BuscaMinas {
      * @return Devuelve un array de 2 dimensiones que representa la solución del juego (el tablero "real")
      */
     public int[][] getSolución(){
-        return tablero.clone();
+        //return tablero.clone();
+
+        int[][] clon = new int[tablero.length][];
+
+        for(int i=0;i<clon.length;i++){
+            clon[i] = tablero[i].clone();
+        }
+
+        return clon;
     }
 
     /** Getter del estado del tablero
@@ -65,7 +73,16 @@ public class BuscaMinas {
      * @return Devuelve un array de 2 dimensiones que representa el estado de visibilidad de las casillas del tablero (lo que ve el jugador)
      */
     public int[][] getDescubiertas(){
-        return descubiertas.clone();
+        //return descubiertas.clone();
+
+        int[][] clon = new int[descubiertas.length][];
+
+        for(int i=0;i<clon.length;i++){
+            clon[i] = descubiertas[i].clone();
+        }
+
+        return clon;
+
     }
 
     /** Indica cuantas casillas no minadas quedan por destapar
